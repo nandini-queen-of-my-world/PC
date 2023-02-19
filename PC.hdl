@@ -1,0 +1,402 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/PC.hdl
+
+/**
+ * A 16-bit counter with load and reset control bits.
+ * if      (reset[t] == 1) out[t+1] = 0
+ * else if (load[t] == 1)  out[t+1] = in[t]
+ * else if (inc[t] == 1)   out[t+1] = out[t] + 1  (integer addition)
+ * else                    out[t+1] = out[t]
+ */
+
+CHIP PC {
+  IN in[16],load,inc,reset;
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+   /*Inc16(in=loop,out=out1);
+    Mux16(a=loop,b=out1,sel=inc,out=incout);
+    Mux16(a=incout,b=in,sel=load,out=loadout);
+    Mux16(a=loadout,b=false,sel=reset,out=regout);
+    Register(in=regout,load=true,out=loop,out=out); */
+   
+//inc16
+Nand(a=d,b=true,out=oA1);
+Nand(a=d,b=oA1,out=oA2);
+Nand(a=true,b=oA1,out=oA3);
+Nand(a=oA1,b=oA1,out=carry1);
+Nand(a=oA2,b=oA3,out=X1);
+
+Nand(a=d1,b=carry1,out=oB1);
+Nand(a=d1,b=oB1,out=oB2);
+Nand(a=carry1,b=oB1,out=oB3);
+Nand(a=oB1,b=oB1,out=carry2);
+Nand(a=oB2,b=oB3,out=X2);
+
+Nand(a=d2,b=carry2,out=oC1);
+Nand(a=d2,b=oC1,out=oC2);
+Nand(a=carry2,b=oC1,out=oC3);
+Nand(a=oC1,b=oC1,out=carry3);
+Nand(a=oC2,b=oC3,out=X3);
+
+Nand(a=d3,b=carry3,out=oD1);
+Nand(a=d3,b=oD1,out=oD2);
+Nand(a=carry3,b=oD1,out=oD3);
+Nand(a=oD1,b=oD1,out=carry4);
+Nand(a=oD2,b=oD3,out=X4);
+
+Nand(a=d4,b=carry4,out=oE1);
+Nand(a=d4,b=oE1,out=oE2);
+Nand(a=carry4,b=oE1,out=oE3);
+Nand(a=oE1,b=oE1,out=carry5);
+Nand(a=oE2,b=oE3,out=X5);
+
+Nand(a=d5,b=carry5,out=oF1);
+Nand(a=d5,b=oF1,out=oF2);
+Nand(a=carry5,b=oF1,out=oF3);
+Nand(a=oF1,b=oF1,out=carry6);
+Nand(a=oF2,b=oF3,out=X6);
+
+Nand(a=d6,b=carry6,out=oG1);
+Nand(a=d6,b=oG1,out=oG2);
+Nand(a=carry6,b=oG1,out=oG3);
+Nand(a=oG1,b=oG1,out=carry7);
+Nand(a=oG2,b=oG3,out=X7);
+
+Nand(a=d7,b=carry7,out=oH1);
+Nand(a=d7,b=oH1,out=oH2);
+Nand(a=carry7,b=oH1,out=oH3);
+Nand(a=oH1,b=oH1,out=carry8);
+Nand(a=oH2,b=oH3,out=X8);
+
+Nand(a=d8,b=carry8,out=oI1);
+Nand(a=d8,b=oI1,out=oI2);
+Nand(a=carry8,b=oI1,out=oI3);
+Nand(a=oI1,b=oI1,out=carry9);
+Nand(a=oI2,b=oI3,out=X9); 
+
+Nand(a=d9,b=carry9,out=oJ1);
+Nand(a=d9,b=oJ1,out=oJ2);
+Nand(a=carry9,b=oJ1,out=oJ3);
+Nand(a=oJ1,b=oJ1,out=carry10);
+Nand(a=oJ2,b=oJ3,out=X10);
+
+Nand(a=d10,b=carry10,out=oK1);
+Nand(a=d10,b=oK1,out=oK2);
+Nand(a=carry10,b=oK1,out=oK3);
+Nand(a=oK1,b=oK1,out=carry11);
+Nand(a=oK2,b=oK3,out=X11);
+
+Nand(a=d11,b=carry11,out=oL1);
+Nand(a=d11,b=oL1,out=oL2);
+Nand(a=carry11,b=oL1,out=oL3);
+Nand(a=oL1,b=oL1,out=carry12);
+Nand(a=oL2,b=oL3,out=X12);
+
+Nand(a=d12,b=carry12,out=oM1);
+Nand(a=d12,b=oM1,out=oM2);
+Nand(a=carry12,b=oM1,out=oM3);
+Nand(a=oM1,b=oM1,out=carry13);
+Nand(a=oM2,b=oM3,out=X13);
+
+Nand(a=d13,b=carry13,out=oN1);
+Nand(a=d13,b=oN1,out=oN2);
+Nand(a=carry13,b=oN1,out=oN3);
+Nand(a=oN1,b=oN1,out=carry14);
+Nand(a=oN2,b=oN3,out=X14);
+
+Nand(a=d14,b=carry14,out=oO1);
+Nand(a=d14,b=oO1,out=oO2);
+Nand(a=carry14,b=oO1,out=oO3);
+Nand(a=oO1,b=oO1,out=carry15);
+Nand(a=oO2,b=oO3,out=X15);
+
+Nand(a=d15,b=carry15,out=oP1);
+Nand(a=d15,b=oP1,out=oP2);
+Nand(a=carry15,b=oP1,out=oP3);
+Nand(a=oP1,b=oP1,out=carry16);
+Nand(a=oP2,b=oP3,out=X16);
+
+//Mux16--1
+Nand(a=inc,b=inc,out=nsel);
+Nand(a=d,b=nsel,out=o1);
+Nand(a=X1,b=inc,out=o2);
+Nand(a=o1,b=o2,out=Y1);
+
+Nand(a=d1,b=nsel,out=o3);
+Nand(a=X2,b=inc,out=o4);
+Nand(a=o3,b=o4,out=Y2);
+
+Nand(a=d2,b=nsel,out=o5);
+Nand(a=X3,b=inc,out=o6);
+Nand(a=o5,b=o6,out=Y3);
+
+Nand(a=d3,b=nsel,out=o7);
+Nand(a=X4,b=inc,out=o8);
+Nand(a=o7,b=o8,out=Y4);
+
+Nand(a=d4,b=nsel,out=o9);
+Nand(a=X5,b=inc,out=o10);
+Nand(a=o9,b=o10,out=Y5);
+
+Nand(a=d5,b=nsel,out=O0);
+Nand(a=X6,b=inc,out=O1);
+Nand(a=O0,b=O1,out=Y6);
+
+Nand(a=d6,b=nsel,out=O2);
+Nand(a=X7,b=inc,out=O3);
+Nand(a=O2,b=O3,out=Y7);
+
+Nand(a=d7,b=nsel,out=O4);
+Nand(a=X8,b=inc,out=O5);
+Nand(a=O4,b=O5,out=Y8);
+
+Nand(a=d8,b=nsel,out=O6);
+Nand(a=X9,b=inc,out=O7);
+Nand(a=O6,b=O7,out=Y9);
+
+Nand(a=d9,b=nsel,out=O8);
+Nand(a=X10,b=inc,out=O9);
+Nand(a=O8,b=O9,out=Y10);
+
+Nand(a=d10,b=nsel,out=P0);
+Nand(a=X11,b=inc,out=P1);
+Nand(a=P0,b=P1,out=Y11);
+
+Nand(a=d11,b=nsel,out=P2);
+Nand(a=X12,b=inc,out=P3);
+Nand(a=P2,b=P3,out=Y12);
+
+Nand(a=d12,b=nsel,out=P4);
+Nand(a=X13,b=inc,out=P5);
+Nand(a=P4,b=P5,out=Y13);
+
+Nand(a=d13,b=nsel,out=P6);
+Nand(a=X14,b=inc,out=P7);
+Nand(a=P6,b=P7,out=Y14);
+
+Nand(a=d14,b=nsel,out=P8);
+Nand(a=X15,b=inc,out=P9);
+Nand(a=P8,b=P9,out=Y15);
+
+Nand(a=d15,b=nsel,out=KP1);
+Nand(a=X16,b=inc,out=KP2);
+Nand(a=KP1,b=KP2,out=Y16);
+
+//Mux16--2
+Nand(a=load,b=load,out=n2sel);
+Nand(a=Y1,b=n2sel,out=ox1);
+Nand(a=in[0],b=load,out=ox2);
+Nand(a=ox1,b=ox2,out=Z1);
+
+Nand(a=Y2,b=n2sel,out=ox3);
+Nand(a=in[1],b=load,out=ox4);
+Nand(a=ox3,b=ox4,out=Z2);
+
+Nand(a=Y3,b=n2sel,out=ox5);
+Nand(a=in[2],b=load,out=ox6);
+Nand(a=ox5,b=ox6,out=Z3);
+
+Nand(a=Y4,b=n2sel,out=ox7);
+Nand(a=in[3],b=load,out=ox8);
+Nand(a=ox7,b=ox8,out=Z4);
+
+Nand(a=Y5,b=n2sel,out=ox9);
+Nand(a=in[4],b=load,out=ox10);
+Nand(a=ox9,b=ox10,out=Z5);
+
+Nand(a=Y6,b=n2sel,out=Ox0);
+Nand(a=in[5],b=load,out=Ox1);
+Nand(a=Ox0,b=Ox1,out=Z6);
+
+Nand(a=Y7,b=n2sel,out=Ox2);
+Nand(a=in[6],b=load,out=Ox3);
+Nand(a=Ox2,b=Ox3,out=Z7);
+
+Nand(a=Y8,b=n2sel,out=Ox4);
+Nand(a=in[7],b=load,out=Ox5);
+Nand(a=Ox4,b=Ox5,out=Z8);
+
+Nand(a=Y9,b=n2sel,out=Ox6);
+Nand(a=in[8],b=load,out=Ox7);
+Nand(a=Ox6,b=Ox7,out=Z9);
+
+Nand(a=Y10,b=n2sel,out=Ox8);
+Nand(a=in[9],b=load,out=Ox9);
+Nand(a=Ox8,b=Ox9,out=Z10);
+
+Nand(a=Y11,b=n2sel,out=Px0);
+Nand(a=in[10],b=load,out=Px1);
+Nand(a=Px0,b=Px1,out=Z11);
+
+Nand(a=Y12,b=n2sel,out=Px2);
+Nand(a=in[11],b=load,out=Px3);
+Nand(a=Px2,b=Px3,out=Z12);
+
+Nand(a=Y13,b=n2sel,out=Px4);
+Nand(a=in[12],b=load,out=Px5);
+Nand(a=Px4,b=Px5,out=Z13);
+
+Nand(a=Y14,b=n2sel,out=Px6);
+Nand(a=in[13],b=load,out=Px7);
+Nand(a=Px6,b=Px7,out=Z14);
+
+Nand(a=Y15,b=n2sel,out=Px8);
+Nand(a=in[14],b=load,out=Px9);
+Nand(a=Px8,b=Px9,out=Z15);
+
+Nand(a=Y16,b=n2sel,out=KPx1);
+Nand(a=in[15],b=load,out=KPx2);
+Nand(a=KPx1,b=KPx2,out=Z16);
+
+//Mux--3
+Nand(a=reset,b=reset,out=n3sel);
+Nand(a=Z1,b=n3sel,out=oy1);
+Nand(a=false,b=reset,out=oy2);
+Nand(a=oy1,b=oy2,out=U1);
+
+Nand(a=Z2,b=n3sel,out=oy3);
+Nand(a=false,b=reset,out=oy4);
+Nand(a=oy3,b=oy4,out=U2);
+
+Nand(a=Z3,b=n3sel,out=oy5);
+Nand(a=false,b=reset,out=oy6);
+Nand(a=oy5,b=oy6,out=U3);
+
+Nand(a=Z4,b=n3sel,out=oy7);
+Nand(a=false,b=reset,out=oy8);
+Nand(a=oy7,b=oy8,out=U4);
+
+Nand(a=Z5,b=n3sel,out=oy9);
+Nand(a=false,b=reset,out=oy10);
+Nand(a=oy9,b=oy10,out=U5);
+
+Nand(a=Z6,b=n3sel,out=Oy0);
+Nand(a=false,b=reset,out=Oy1);
+Nand(a=Oy0,b=Oy1,out=U6);
+
+Nand(a=Z7,b=n3sel,out=Oy2);
+Nand(a=false,b=reset,out=Oy3);
+Nand(a=Oy2,b=Oy3,out=U7);
+
+Nand(a=Z8,b=n3sel,out=Oy4);
+Nand(a=false,b=reset,out=Oy5);
+Nand(a=Oy4,b=Oy5,out=U8);
+
+Nand(a=Z9,b=n3sel,out=Oy6);
+Nand(a=false,b=reset,out=Oy7);
+Nand(a=Oy6,b=Oy7,out=U9);
+
+Nand(a=Z10,b=n3sel,out=Oy8);
+Nand(a=false,b=reset,out=Oy9);
+Nand(a=Oy8,b=Oy9,out=U10);
+
+Nand(a=Z11,b=n3sel,out=Py0);
+Nand(a=false,b=reset,out=Py1);
+Nand(a=Py0,b=Py1,out=U11);
+
+Nand(a=Z12,b=n3sel,out=Py2);
+Nand(a=false,b=reset,out=Py3);
+Nand(a=Py2,b=Py3,out=U12);
+
+Nand(a=Z13,b=n3sel,out=Py4);
+Nand(a=false,b=reset,out=Py5);
+Nand(a=Py4,b=Py5,out=U13);
+
+Nand(a=Z14,b=n3sel,out=Py6);
+Nand(a=false,b=reset,out=Py7);
+Nand(a=Py6,b=Py7,out=U14);
+
+Nand(a=Z15,b=n3sel,out=Py8);
+Nand(a=false,b=reset,out=Py9);
+Nand(a=Py8,b=Py9,out=U15);
+
+Nand(a=Z16,b=n3sel,out=KPy1);
+Nand(a=false,b=reset,out=KPy2);
+Nand(a=KPy1,b=KPy2,out=U16);
+
+//Register
+    Nand(a=true, b=true, out=A);
+    Nand(a=d, b=A, out=A1);
+    Nand(a=true, b=U1, out=B1);
+    Nand(a=A1, b=B1, out=C0);
+DFF(in=C0,out=d,out=out[0]);
+
+    Nand(a=d1, b=A, out=A2);
+    Nand(a=true, b=U2, out=B2);
+    Nand(a=A2, b=B2, out=C1);
+DFF(in=C1,out=d1,out=out[1]);
+
+    Nand(a=d2, b=A, out=A3);
+    Nand(a=true, b=U3, out=B3);
+    Nand(a=A3, b=B3, out=C2);
+DFF(in=C2,out=d2,out=out[2]);
+
+    Nand(a=d3, b=A, out=A4);
+    Nand(a=true, b=U4, out=B4);
+    Nand(a=A4, b=B4, out=C3);
+DFF(in=C3,out=d3,out=out[3]);
+
+    Nand(a=d4, b=A, out=A04);
+    Nand(a=true, b=U5, out=B04);
+    Nand(a=A04, b=B04, out=C4);
+DFF(in=C4,out=d4,out=out[4]);
+
+    Nand(a=d5, b=A, out=A5);
+    Nand(a=true, b=U6, out=B5);
+    Nand(a=A5, b=B5, out=C5);
+DFF(in=C5,out=d5,out=out[5]);
+
+    Nand(a=d6, b=A, out=A6);
+    Nand(a=true, b=U7, out=B6);
+    Nand(a=A6, b=B6, out=C6);
+DFF(in=C6,out=d6,out=out[6]);
+
+    Nand(a=d7, b=A, out=A7);
+    Nand(a=true, b=U8, out=B7);
+    Nand(a=A7, b=B7, out=C7);
+DFF(in=C7,out=d7,out=out[7]);
+
+    Nand(a=d8, b=A, out=A8);
+    Nand(a=true, b=U9, out=B8);
+    Nand(a=A8, b=B8, out=C8);
+DFF(in=C8,out=d8,out=out[8]);
+
+    Nand(a=d9, b=A, out=A9);
+    Nand(a=true, b=U10, out=B9);
+    Nand(a=A9, b=B9, out=C9);
+DFF(in=C9,out=d9,out=out[9]);
+
+    Nand(a=d10, b=A, out=A10);
+    Nand(a=true, b=U11, out=B10);
+    Nand(a=A10, b=B10, out=C10);
+DFF(in=C10,out=d10,out=out[10]);
+
+    Nand(a=d11, b=A, out=A11);
+    Nand(a=true, b=U12, out=B11);
+    Nand(a=A11, b=B11, out=C11);
+DFF(in=C11,out=d11,out=out[11]);
+
+    Nand(a=d12, b=A, out=A12);
+    Nand(a=true, b=U13, out=B12);
+    Nand(a=A12, b=B12, out=C12);
+DFF(in=C12,out=d12,out=out[12]);
+
+    Nand(a=d13, b=A, out=A13);
+    Nand(a=true, b=U14, out=B13);
+    Nand(a=A13, b=B13, out=C13);
+DFF(in=C13,out=d13,out=out[13]);
+
+    Nand(a=d14, b=A, out=A14);
+    Nand(a=true, b=U15, out=B14);
+    Nand(a=A14, b=B14, out=C14);
+DFF(in=C14,out=d14,out=out[14]);
+
+    Nand(a=d15, b=A, out=A15);
+    Nand(a=true, b=U16, out=B15);
+    Nand(a=A15, b=B15, out=C15);
+DFF(in=C15,out=d15,out=out[15]);
+}
